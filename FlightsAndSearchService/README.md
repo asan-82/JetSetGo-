@@ -5,7 +5,7 @@
 - Execute `npm install` on the same path as of the root directory of the cloned project
 - Create a `.env` file in the root directory of the project and add the following environment variables
           - `PORT=3000`
--Inside the`src/config` folder create a file named `config.json` and then add the following piece of code:
+- Inside the`src/config` folder create a file named `config.json` and then add the following piece of code:
 
 ```
 {
@@ -18,3 +18,4 @@
   }
 }
 ```
+- Once you have added the db config as listed above, go to the src folder from your terminal and execute `npx sequealize db:create`
