@@ -3,6 +3,10 @@ const {City}=require("../models/index");
 class CityRepository{
     async createCity({name}){
      try{
+        const existingCity = await City.findOne({ where: { name } });
+        if (existingCity) {
+            throw { message: "City already exists", statusCode: 400 };
+        }
          const city=await City.create({name});
          return city;
      }
@@ -15,12 +19,12 @@ class CityRepository{
     async deleteCity(cityId)
     {
         try{
-         const city=await City.destroy({
+         const result=await City.destroy({
             where:{
                 id:cityId
             }
          });
-         return true;
+         return result;
      }
      catch(error)
      {
@@ -31,12 +35,13 @@ class CityRepository{
      async updateCity(cityId,data)
     {
         try{
-         const city=await City.update(data,{
+         await City.update(data,{
             where:{
                 id:cityId
             }
          });
-         return city;
+        const updatedCity = await City.findByPk(cityId); 
+            return updatedCity;
      }
      catch(error)
      {
@@ -47,11 +52,7 @@ class CityRepository{
      async getCity(cityId)
     {
         try{
-         const city=await City.findByPk({
-            where:{
-                id:cityId
-            }
-         });
+         const city=await City.findByPk(cityId);
          return city;
      }
      catch(error)

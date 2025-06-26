@@ -12,15 +12,14 @@ const create = async (req, res) => {
       err: {},
     });
   } catch (error) {
-    console.log(error);
-    return res.status(201).json({
-      data: {},
-      success: false,
-      message: "Not able to creat the city",
-      err: error,
-    });
-  }
-};
+  console.log(error);
+  return res.status(error.statusCode || 500).json({
+    data: {},
+    success: false,
+    message: error.message || "Not able to create the city",
+    err: error
+  });
+}};
 
 const destroy = async (req, res) => {
   try {
@@ -33,7 +32,7 @@ const destroy = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(201).json({
+    return res.status(404).json({
       data: {},
       success: false,
       message: "Not able to delete a city",
@@ -52,7 +51,7 @@ const get = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(201).json({
+    return res.status(404).json({
       data: {},
       success: false,
       message: "Not able to get the city",
@@ -71,7 +70,7 @@ const update = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(201).json({
+    return res.status(500).json({
       data: {},
       success: false,
       message: "Not able to update the city",
