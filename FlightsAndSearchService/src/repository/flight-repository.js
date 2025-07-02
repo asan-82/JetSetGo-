@@ -13,20 +13,16 @@ if(data.departureAirportId)
      {
         filter.departureAirportId=data.departureAirportId;
      }
-     if(data.minPrice && data.maxPrice){
-        Object.assign(filter,{
-          [Op.and]: [
-            {price:{[Op.gte]:data.minPrice}},
-            {price:{[Op.gte]:data.minPrice}}
-        ]
-        });
-     }
-     if(data.minPrice){
-        Object.assign(filter,{price:{[Op.gte]:data.minPrice}});
-     }
-    if(data.maxPrice){
-        Object.assign(filter,{price:{[Op.lte]:data.maxPrice}});
-     }
+     if (data.minPrice || data.maxPrice) {
+    filter.price = {};
+    if (data.minPrice) {
+        filter.price[Op.gte] = data.minPrice;
+    }
+    if (data.maxPrice) {
+        filter.price[Op.lte] = data.maxPrice;
+    }
+}
+
      return filter;
     }
     async createFlight(data)
